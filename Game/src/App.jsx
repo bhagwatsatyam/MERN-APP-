@@ -1,11 +1,14 @@
-import './App.css'
+// src/App.jsx
+import React from "react";
+import Container from "./container/container";
+import "./App.css";
 
-function App() {
-
+const App = () => {
   return (
-    <>
-    </>
-  )
-}
+    <div className="app">
+      <Container />
+    </div>
+  );
+};
 
-export default App
+export default App;

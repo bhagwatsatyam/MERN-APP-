@@ -17,7 +17,7 @@ const Game = ({ category, questions, onEndGame, styles }) => {
   };
 
   return (
-    <div className="game-container" style={styles.container}>
+    <div className="game-container">
       <Question
         question={questions[currentQuestionIndex]}
         onAnswer={handleAnswer}
