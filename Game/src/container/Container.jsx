@@ -1,52 +1,86 @@
-// src/container/Container.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import WelcomeMessage from "../components/WelcomeMessage";
-import Game from "../components/Game";
+import Question from "../components/Question";
 import Score from "../components/Score";
-import CategorySelection from "../components/CategorySelection";
 import "../styles/Container.css";
 
-const Container = () => {
-  const [gameStarted, setGameStarted] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [score, setScore] = useState(0);
-  const [styles, setStyles] = useState({});
-  const [questions, setQuestions] = useState([]);
+const questions = [
+  {
+    question: "What is the capital of France?",
+    options: ["Paris", "London", "Berlin", "Madrid"],
+    correctAnswer: "Paris",
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: ["Earth", "Mars", "Jupiter", "Saturn"],
+    correctAnswer: "Mars",
+  },
+  {
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    options: ["Harper Lee", "Mark Twain", "J.K. Rowling", "Ernest Hemingway"],
+    correctAnswer: "Harper Lee",
+  },
+  {
+    question: "What is the largest ocean on Earth?",
+    options: [
+      "Atlantic Ocean",
+      "Indian Ocean",
+      "Arctic Ocean",
+      "Pacific Ocean",
+    ],
+    correctAnswer: "Pacific Ocean",
+  },
+  {
+    question: "Which element has the chemical symbol 'O'?",
+    options: ["Oxygen", "Gold", "Silver", "Iron"],
+    correctAnswer: "Oxygen",
+  },
+];
 
-  useEffect(() => {
-    fetch("/data/quiz-game.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setStyles(data.styles);
-        setQuestions(data.questions);
-      });
-  }, []);
+const Container = () => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState({ correct: 0, incorrect: 0 });
+  const [quizStarted, setQuizStarted] = useState(false);
+  const [quizCompleted, setQuizCompleted] = useState(false);
+
+  const handleStartQuiz = () => {
+    setQuizStarted(true);
+  };
+
+  const handleAnswerSelected = (selectedOption) => {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (selectedOption === currentQuestion.correctAnswer) {
+      setScore((prevScore) => ({
+        ...prevScore,
+        correct: prevScore.correct + 1,
+      }));
+    } else {
+      setScore((prevScore) => ({
+        ...prevScore,
+        incorrect: prevScore.incorrect + 1,
+      }));
+    }
+
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setQuizCompleted(true);
+    }
+  };
 
   return (
-    <div className="container" style={styles.container}>
-      {!gameStarted ? (
-        <WelcomeMessage
-          onStart={() => setGameStarted(true)}
-          styles={styles.welcome}
-        />
-      ) : selectedCategory ? (
-        <Game
-          category={selectedCategory}
-          questions={questions.filter((q) => q.category === selectedCategory)}
-          onEndGame={(finalScore) => {
-            setScore(finalScore);
-            setGameStarted(false);
-            setSelectedCategory(null);
-          }}
-          styles={styles.game}
-        />
+    <div className="container">
+      {!quizStarted ? (
+        <WelcomeMessage onStartQuiz={handleStartQuiz} />
+      ) : quizCompleted ? (
+        <Score correct={score.correct} incorrect={score.incorrect} />
       ) : (
-        <CategorySelection
-          onSelectCategory={setSelectedCategory}
-          styles={styles.categorySelection}
+        <Question
+          question={questions[currentQuestionIndex].question}
+          options={questions[currentQuestionIndex].options}
+          onAnswerSelected={handleAnswerSelected}
         />
       )}
-      <Score score={score} styles={styles.score} />
     </div>
   );
 };

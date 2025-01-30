@@ -1,13 +1,15 @@
-// src/components/Question.jsx
 import React from "react";
-import Options from "./Options";
 import "../styles/Question.css";
 
-const Question = ({ question, onAnswer, styles }) => {
+const Question = ({ question, options, onAnswerSelected }) => {
   return (
-    <div className="question-container" style={styles.container}>
-      <h3 style={styles.text}>{question.text}</h3>
-      <Options options={question.options} correctAnswer={question.answer} onAnswer={onAnswer} styles={styles.options} />
+    <div className="question">
+      <h2>{question}</h2>
+      {options.map((option, index) => (
+        <button key={index} onClick={() => onAnswerSelected(option)}>
+          {option}
+        </button>
+      ))}
     </div>
   );
 };
