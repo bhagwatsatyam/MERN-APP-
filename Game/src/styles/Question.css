@@ -1,5 +1,5 @@
 /* Question.css */
-.question {
+.question-container {
   animation: slideIn 0.5s ease-in-out;
 }
 
@@ -14,20 +14,34 @@
   }
 }
 
-.question h2 {
+.question-container h2 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-.question button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 10px; /* Gap between buttons */
+}
+
+.question-container button {
   padding: 12px;
   font-size: 1rem;
   background: #4a90e2;
+  border: none; /* Remove border */
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.question button:hover {
+.question-container button:hover {
   background: #357abd;
+  transform: scale(1.05);
+}
+
+.question-container button:active {
+  transform: scale(0.95);
 }
