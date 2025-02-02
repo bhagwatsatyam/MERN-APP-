@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Question.css";
 
+// Importing images
+import HAPPY_BABY_1 from "../assets/HAPPY_BABY_1.png";
+import HAPPY_BABY_2 from "../assets/HAPPY_BABY_2.png";
+import HAPPY_SHARK from "../assets/HAPPY_SHARK.png";
+import HAPPY_SHARK_2 from "../assets/HAPPY_SHARK_2.png";
+import SAD_BABY from "../assets/SAD_BABY.png";
+import SAD_SHARK_2 from "../assets/SAD_SHARK_2.png";
+import SAD_SHARK_3 from "../assets/SAD_SHARK_3.png";
+import SAD_SHARK_4 from "../assets/SAD_SHARK_4.png";
+import SAD_SHARK from "../assets/SAD_SHARK.png";
+
+// Arrays of happy and sad images
+const happyImages = [HAPPY_BABY_1, HAPPY_BABY_2, HAPPY_SHARK, HAPPY_SHARK_2];
+const sadImages = [SAD_BABY, SAD_SHARK_2, SAD_SHARK_3, SAD_SHARK_4, SAD_SHARK];
+
 const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [shuffledOptions, setShuffledOptions] = useState([]);
+  const [currentImage, setCurrentImage] = useState(null); // State to track the current image
 
   useEffect(() => {
     fetch("/mcq.json")
@@ -39,6 +55,33 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
     }
   }, [currentQuestionIndex, questions]);
 
+  const handleOptionClick = (selectedOption) => {
+    const isCorrect =
+      selectedOption ===
+      currentQuestion.options[currentQuestion.correctOptionsIndex];
+    onAnswerSelected(isCorrect);
+
+    // Set the image based on the correctness of the answer
+    if (isCorrect) {
+      const randomHappyImage =
+        happyImages[Math.floor(Math.random() * happyImages.length)];
+      setCurrentImage(randomHappyImage);
+    } else {
+      const randomSadImage =
+        sadImages[Math.floor(Math.random() * sadImages.length)];
+      setCurrentImage(randomSadImage);
+    }
+
+    if (currentQuestionIndex < questions.length - 1) {
+      setTimeout(() => {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setCurrentImage(null); // Reset the image for the next question
+      }, 1000); // Delay before moving to the next question
+    } else {
+      onQuizCompletion();
+    }
+  };
+
   if (loading) {
     return <div>Loading questions...</div>;
   }
@@ -48,19 +91,6 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-
-  const handleOptionClick = (selectedOption) => {
-    const isCorrect =
-      selectedOption ===
-      currentQuestion.options[currentQuestion.correctOptionsIndex];
-    onAnswerSelected(isCorrect);
-
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      onQuizCompletion();
-    }
-  };
 
   const questionStyles = styles?.questions?.[1]?.landscape?.divs?.find(
     (div) => div.id === "question-title-1"
@@ -84,6 +114,15 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
           </button>
         ))}
       </div>
+      {currentImage && (
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <img
+            src={currentImage}
+            alt="Feedback"
+            style={{ opacity: 1, width: "150px", height: "auto" }}
+          />
+        </div>
+      )}
     </div>
   );
 };
