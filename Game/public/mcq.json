@@ -51,7 +51,7 @@
           "Parallel processing ",
           "Synchronous execution "
         ],
-        "question": "How does JavaScript handle I/O operations efficiently despite being single-threaded? "
+        "question": "How does JavaScript handle I/O operations efficiently despite being single-threaded?"
       },
       {
         "correctOptionsIndex": 0,
@@ -61,7 +61,7 @@
           "Function body",
           "Event handler"
         ],
-        "question": "In what context does JS code start executing in a file ending with .js? "
+        "question": "In what context does JS code start executing in a file ending with .js?"
       },
       {
         "correctOptionsIndex": 0,
@@ -71,7 +71,7 @@
           "var",
           "static"
         ],
-        "question": "Which keyword is used to declare variables that can be reassigned in JS? "
+        "question": "Which keyword is used to declare variables that can be reassigned in JS?"
       },
       {
         "correctOptionsIndex": 0,
@@ -81,9 +81,91 @@
           ".Async Task Library",
           ".Future Framework."
         ],
-        "question": "What API allows asynchronous work in JS with async/await syntax? "
+        "question": "What API allows asynchronous work in JS with async/await syntax?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "MongoDB",
+          "MySQL",
+          "PostgreSQL",
+          "SQLite"
+        ],
+        "question": "Which database is a NoSQL database used with Node.js?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "Mongoose",
+          "Express",
+          "React",
+          "Vue"
+        ],
+        "question": "Which ODM library is commonly used to interact with MongoDB in Node.js?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "Express.js",
+          "Django",
+          "Flask",
+          "Laravel"
+        ],
+        "question": "Which Node.js framework is commonly used to build server-side applications?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "npm",
+          "yarn",
+          "pip",
+          "composer"
+        ],
+        "question": "Which package manager is used in Node.js to install dependencies?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "Single Page Application",
+          "Multi Page Application",
+          "Progressive Web Application",
+          "Dynamic Page Application"
+        ],
+        "question": "What type of application is commonly built with React?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "useState",
+          "useEffect",
+          "useRef",
+          "useCallback"
+        ],
+        "question": "Which React hook is used to manage state in a functional component?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "React Router",
+          "React Redux",
+          "React Context",
+          "React Query"
+        ],
+        "question": "Which library is commonly used in React to handle routing?"
+      },
+      {
+        "correctOptionsIndex": 0,
+        "options": [
+          "MongoDB Atlas",
+          "MongoDB Cloud",
+          "MongoDB Enterprise",
+          "MongoDB Studio"
+        ],
+        "question": "What is the cloud-based version of MongoDB called?"
       }
+      
+    
     ],
-    "topic": "JavaScript Essentials"
+    "topic": "Node.js, HTML, JavaScript Basics, MongoDB, React"
   }
 }

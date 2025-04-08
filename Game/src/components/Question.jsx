@@ -7,10 +7,10 @@ import HAPPY_BABY_2 from "../assets/HAPPY_BABY_2.png";
 import HAPPY_SHARK from "../assets/HAPPY_SHARK.png";
 import HAPPY_SHARK_2 from "../assets/HAPPY_SHARK_2.png";
 import SAD_BABY from "../assets/SAD_BABY.png";
+import SAD_SHARK from "../assets/SAD_SHARK.png";
 import SAD_SHARK_2 from "../assets/SAD_SHARK_2.png";
 import SAD_SHARK_3 from "../assets/SAD_SHARK_3.png";
 import SAD_SHARK_4 from "../assets/SAD_SHARK_4.png";
-import SAD_SHARK from "../assets/SAD_SHARK.png";
 
 // Arrays of happy and sad images
 const happyImages = [HAPPY_BABY_1, HAPPY_BABY_2, HAPPY_SHARK, HAPPY_SHARK_2];
@@ -21,8 +21,9 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [shuffledOptions, setShuffledOptions] = useState([]);
-  const [currentImage, setCurrentImage] = useState(null); // State to track the current image
+  const [currentImage, setCurrentImage] = useState(null);
 
+  // Fetch questions on component mount
   useEffect(() => {
     fetch("/mcq.json")
       .then((response) => response.json())
@@ -39,6 +40,7 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
       });
   }, []);
 
+  // Shuffle options for each question
   const shuffleOptions = (question) => {
     if (!question) return;
     const options = [...question.options];
@@ -49,6 +51,7 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
     setShuffledOptions(options);
   };
 
+  // Handle next question and image update
   useEffect(() => {
     if (questions.length > 0) {
       shuffleOptions(questions[currentQuestionIndex]);
@@ -56,6 +59,7 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
   }, [currentQuestionIndex, questions]);
 
   const handleOptionClick = (selectedOption) => {
+    const currentQuestion = questions[currentQuestionIndex];
     const isCorrect =
       selectedOption ===
       currentQuestion.options[currentQuestion.correctOptionsIndex];
@@ -72,6 +76,7 @@ const Question = ({ onAnswerSelected, onQuizCompletion, styles }) => {
       setCurrentImage(randomSadImage);
     }
 
+    // Go to next question
     if (currentQuestionIndex < questions.length - 1) {
       setTimeout(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
